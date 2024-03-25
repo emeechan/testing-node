@@ -1,8 +1,8 @@
-import Header from './components/Header';
+import Header from './components/Header'
 function App() {
     return (
         <>
-        <Header text />
+        <Header bgColor='red' textColor='blue' />
         <div className='container'>
             <h1>My App</h1>
     </div>
