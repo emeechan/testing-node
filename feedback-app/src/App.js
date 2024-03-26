@@ -25,7 +25,11 @@ function App() {
         ])
 
         const deleteFeedback = (id) => {
-            console.log('App', id)
+            if(window.confirm('Are you sure you want to delete?')) {
+                //.filter is array method that loops through but filters out whatever you want. we want to filter out the feedback we're deleting
+                //returns an array, minus the item we're deleting. this array is set to feedback using setFeedback
+                setFeedback(feedback.filter((item) => item.id !== id))
+            }
         }
 
     return (
