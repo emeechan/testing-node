@@ -2,6 +2,7 @@ import './index.css'
 import { useState } from 'react'
 import Header from './components/Header'
 import FeedbackList from './components/FeedbackList'
+import FeedbackStats from './components/FeedbackStats'
 
 function App() {
     //app level state
@@ -33,9 +34,11 @@ function App() {
         }
 
     return (
+        //{feedback} is a state so when it changes it will automatically change in feedbackStats component
         <>
         <Header />
         <div className='container'>
+            <FeedbackStats feedback={feedback} />
             <FeedbackList feedback={feedback} 
             handleDelete={deleteFeedback} />
     </div>
