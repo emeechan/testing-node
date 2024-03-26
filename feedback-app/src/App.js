@@ -24,13 +24,16 @@ function App() {
         },
         ])
 
-
+        const deleteFeedback = (id) => {
+            console.log('App', id)
+        }
 
     return (
         <>
         <Header />
         <div className='container'>
-            <FeedbackList feedback={feedback}/>
+            <FeedbackList feedback={feedback} 
+            handleDelete={deleteFeedback} />
     </div>
     </>
  )
