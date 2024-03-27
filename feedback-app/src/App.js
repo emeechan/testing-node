@@ -1,4 +1,5 @@
 import './index.css'
+import { v4 as uuidv4} from 'uuid'
 import { useState } from 'react'
 import Header from './components/Header'
 import FeedbackList from './components/FeedbackList'
@@ -26,6 +27,12 @@ function App() {
         },
         ])
 
+        const addFeedback = (newFeedback) => {
+            newFeedback.id = uuidv4()
+            //takes the objects that are already in feedback and puts it and the new ones in the array
+            setFeedback([newFeedback, ...feedback])
+        }
+
         const deleteFeedback = (id) => {
             if(window.confirm('Are you sure you want to delete?')) {
                 //.filter is array method that loops through but filters out whatever you want. we want to filter out the feedback we're deleting
@@ -39,7 +46,7 @@ function App() {
         <>
         <Header />
         <div className='container'>
-            <FeedbackForm />
+            <FeedbackForm handleAdd={addFeedback} />
             <FeedbackStats feedback={feedback} />
             <FeedbackList feedback={feedback} 
             handleDelete={deleteFeedback} />

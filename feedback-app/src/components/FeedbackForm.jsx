@@ -3,7 +3,7 @@ import RatingSelect from "./RatingSelect"
 import Card from "./shared/Card"
 import Button from "./shared/Button"
 
-function FeedbackForm() {
+function FeedbackForm({handleAdd}) {
     const [text, setText] = useState('')
     const [rating, setRating] = useState(10)
     //until they type 10 characters, the button is disabled
@@ -30,9 +30,25 @@ function FeedbackForm() {
     setText(e.target.value)
 }
 
+const handleSubmit = (e) => {
+    e.preventDefault()
+    if(text.trim().length > 10) {
+        const newFeedback = {
+            //same as saying text: text,
+            text,
+            rating,
+        }
+
+        handleAdd(newFeedback)
+
+        //clears the text field after submitting a review
+        setText('')
+    }
+}
+
   return (
     <Card>
-      <from>
+      <form onSubmit={handleSubmit}>
         <h2>How would you rate your service with us?</h2>
         <RatingSelect select={(rating) => setRating(rating)}/>
         <div className='input-group'>
@@ -45,7 +61,7 @@ function FeedbackForm() {
         </div>
 
         {message && <div className='message'>{message}</div>}
-      </from>
+      </form>
     </Card>
   )
 }
