@@ -11,17 +11,17 @@ function App() {
     //[const name, function to edit state]
     const [feedback, setFeedback] = useState([
         {
-        id: 1,
+        id: '1',
         rating: 10,
         text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae.',
         },
         {
-        id: 2,
+        id: '2',
         rating: 9,
         text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae.',
         },
         {
-        id: 3,
+        id: '3',
         rating: 8,
         text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae.',
         },
@@ -29,6 +29,8 @@ function App() {
 
         const addFeedback = (newFeedback) => {
             newFeedback.id = uuidv4()
+            newFeedback.rating = +newFeedback.rating
+            console.log(newFeedback)
             //takes the objects that are already in feedback and puts it and the new ones in the array
             setFeedback([newFeedback, ...feedback])
         }
@@ -54,5 +56,6 @@ function App() {
     </>
  )
 }    
+
 
 export default App
