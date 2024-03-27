@@ -1,10 +1,12 @@
 import './index.css'
 import { v4 as uuidv4} from 'uuid'
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { useState } from 'react'
 import Header from './components/Header'
 import FeedbackList from './components/FeedbackList'
 import FeedbackStats from './components/FeedbackStats'
 import FeedbackForm from './components/FeedbackForm'
+import AboutPage from './pages/AboutPage'
 
 function App() {
     //app level state
@@ -45,15 +47,24 @@ function App() {
 
     return (
         //{feedback} is a state so when it changes it will automatically change in feedbackStats component
-        <>
+        <Router>
         <Header />
         <div className='container'>
-            <FeedbackForm handleAdd={addFeedback} />
-            <FeedbackStats feedback={feedback} />
-            <FeedbackList feedback={feedback} 
+            <Routes>
+            <Route exact path='/' element={
+                <>
+                <FeedbackForm handleAdd={addFeedback} />
+                <FeedbackStats feedback={feedback} />
+                <FeedbackList feedback={feedback} 
             handleDelete={deleteFeedback} />
+                </>
+            }>
+            </Route>
+
+            <Route path='/about' element={<AboutPage />} />
+            </Routes>
     </div>
-    </>
+    </Router>
  )
 }    
 
