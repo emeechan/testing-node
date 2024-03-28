@@ -8,6 +8,7 @@ import FeedbackStats from './components/FeedbackStats'
 import FeedbackForm from './components/FeedbackForm'
 import AboutPage from './pages/AboutPage'
 import AboutIconLink from './components/AboutIconLink'
+import { FeedbackProvider } from './context/FeedbackContext'
 
 function App() {
     //app level state
@@ -48,6 +49,7 @@ function App() {
 
     return (
         //{feedback} is a state so when it changes it will automatically change in feedbackStats component
+    <FeedbackProvider>
         <Router>
         <Header />
         <div className='container'>
@@ -63,11 +65,12 @@ function App() {
             </Route>
 
             <Route path='/about' element={<AboutPage />} />
-            </Routes>
+            </Routes> 
 
             <AboutIconLink />
     </div>
     </Router>
+    </FeedbackProvider>
  )
 }    
 
