@@ -22,6 +22,13 @@ export const FeedbackProvider = ({children}) => {
         }
     ])
 
+    //if edit icon clicked, it will allow it to be editted
+    const [feedbackEdit, setFeedbackEdit] = useState({
+        item: {},
+        edit: false
+    })
+
+    // to add feedback
     const addFeedback = (newFeedback) => {
         newFeedback.id = uuidv4()
         newFeedback.rating = +newFeedback.rating
@@ -30,6 +37,7 @@ export const FeedbackProvider = ({children}) => {
         setFeedback([newFeedback, ...feedback])
     }
 
+        //to delete feedback
     const deleteFeedback = (id) => {
         if(window.confirm('Are you sure you want to delete?')) {
             //.filter is array method that loops through but filters out whatever you want. we want to filter out the feedback we're deleting
@@ -38,11 +46,20 @@ export const FeedbackProvider = ({children}) => {
         }
     }
 
+    //set item to be updated
+    const editFeedback = (item) => {
+        setFeedbackEdit({
+            item,
+            edit: true,
+        })
+    }
+
     return <FeedbackContext.Provider value={{
         //pases feedback state into components that need it
         feedback,
         deleteFeedback,
         addFeedback,
+        editFeedback,
     }}>
         {children}
     </FeedbackContext.Provider>
