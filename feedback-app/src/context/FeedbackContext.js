@@ -1,32 +1,30 @@
-import { createContext, useState} from 'react'
+import { createContext, useState, useEffect} from 'react'
 import { v4 as uuidv4} from 'uuid'
 
 const FeedbackContext = createContext()
 
 export const FeedbackProvider = ({children}) => {
-    const [feedback, setFeedback] = useState([
-        {
-            id: 1,
-            text: 'This is feedback item 1',
-            rating: 10,
-        },
-        {
-            id: 2,
-            text: 'This is feedback item 2',
-            rating: 9,
-        },
-        {
-            id: 3,
-            text: 'This is feedback item 3',
-            rating: 7,
-        }
-    ])
+    const [isLoading, setIsLoading] = useState(true)
+    const [feedback, setFeedback] = useState([])
 
     //if edit icon clicked, it will allow it to be editted
     const [feedbackEdit, setFeedbackEdit] = useState({
         item: {},
         edit: false
     })
+
+    useEffect(() => {
+        fetchFeedback()
+    }, [])
+
+    //fetches feedback
+    const fetchFeedback = async () => {
+        const response = await fetch("http://localhost:5000/feedback?_sort=id")
+        const data = await response.json()
+        setFeedback(data);
+        setIsLoading(false)
+
+    }
 
     // to add feedback
     const addFeedback = (newFeedback) => {
@@ -53,9 +51,7 @@ export const FeedbackProvider = ({children}) => {
     //for each feedback it calls an item and runs a condition of if the item id is equal to the one being passed in that we want to update 
     //if so, update the item
     //else, return the current item
-        setFeedback(feedback.map((item) => item.id === id ? 
-        { ... item, ...updItem } 
-        : item));
+        setFeedback(feedback.map((item) => item.id === id ? { ...item, ...updItem } : item));
     }
 
     //set item to be updated
@@ -70,6 +66,7 @@ export const FeedbackProvider = ({children}) => {
         //pases feedback state into components that need it
         feedback,
         feedbackEdit,
+        isLoading,
         deleteFeedback,
         addFeedback,
         //the function that runs when we click the edit button
