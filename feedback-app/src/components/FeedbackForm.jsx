@@ -1,15 +1,18 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import RatingSelect from "./RatingSelect"
 import Card from "./shared/Card"
 import Button from "./shared/Button"
+import FeedbackContext from "../context/FeedbackContext"
 
-function FeedbackForm({handleAdd}) {
+function FeedbackForm() {
     const [text, setText] = useState('')
     const [rating, setRating] = useState(10)
     //until they type 10 characters, the button is disabled
     const [btnDisabled, setBtnDisabled] = useState(true)
     //displays the message of the minimum character count
     const [message, setMessage] = useState('')
+
+    const {addFeedback} = useContext(FeedbackContext)
 
     //gets what the user is typing
     const handleTextChange = (e) => {
@@ -39,7 +42,7 @@ const handleSubmit = (e) => {
             rating,
         }
 
-        handleAdd(newFeedback)
+        addFeedback(newFeedback)
 
         //clears the text field after submitting a review
         setText('')

@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import FeedbackItem from "./FeedbackItem"
 import FeedbackContext from '../context/FeedbackContext'
 
-function FeedbackList({handleDelete}) {
+function FeedbackList() {
   //extracts what we want from feedbackContext using useContext hook and passing in the context we want to use ie FeedbackContext
   const {feedback} = useContext(FeedbackContext)
 
@@ -28,7 +28,7 @@ function FeedbackList({handleDelete}) {
         <FeedbackItem 
         key={item.id} 
         item={item} 
-        handleDelete={handleDelete} />
+        />
         </motion.div>
       ))}
       </AnimatePresence>
