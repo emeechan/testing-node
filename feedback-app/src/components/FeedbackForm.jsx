@@ -12,7 +12,7 @@ function FeedbackForm() {
   //displays the message of the minimum character count
   const [message, setMessage] = useState('')
 
-  const { addFeedback, feedbackEdit, } =
+  const { addFeedback, feedbackEdit, updateFeedback } =
     useContext(FeedbackContext)
 
     //function which takes in a call back and an array of dependancies
@@ -53,7 +53,12 @@ function FeedbackForm() {
         rating,
       }
 
+    if(feedbackEdit.edit === true){
+        updateFeedback(feedbackEdit.item.id, newFeedback)
+    } else {
+        //else if nothing to be edited, then add it
       addFeedback(newFeedback)
+    }
 
        //clears the text field after writing a review
         setText('')
@@ -65,7 +70,7 @@ function FeedbackForm() {
       setText('')
     }
       //ADDITIONAL CODE
-      
+
     function FeedbackForm(){
   }
 
