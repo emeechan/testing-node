@@ -44,8 +44,10 @@ export const FeedbackProvider = ({children}) => {
         setFeedback([data, ...feedback])
       }
     //to delete feedback
-    const deleteFeedback = (id) => {
+    const deleteFeedback = async (id) => {
         if(window.confirm('Are you sure you want to delete?')) {
+            await fetch(`/feedback/${id}`, {method: 'DELETE'})
+
             //.filter is array method that loops through but filters out whatever you want. we want to filter out the feedback we're deleting
             //returns an array, minus the item we're deleting. this array is set to feedback using setFeedback
             setFeedback(feedback.filter((item) => item.id !== id))
@@ -54,12 +56,24 @@ export const FeedbackProvider = ({children}) => {
 
     //update feedback item 
     //updItem is updated item
-    const updateFeedback = (id, updItem) => {
+    //updates the server
+    const updateFeedback = async (id, updItem) => {
+        const response = await fetch(`/feedback/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updItem)
+        })
+
+        //gets the response back, which is updated item
+        const data = await response.json()
+
     //returns an array with the updated item
     //for each feedback it calls an item and runs a condition of if the item id is equal to the one being passed in that we want to update 
     //if so, update the item
     //else, return the current item
-        setFeedback(feedback.map((item) => item.id === id ? { ...item, ...updItem } : item));
+        setFeedback(feedback.map((item) => item.id === id ? { ...item, ...data } : item));
     }
 
     //set item to be updated
