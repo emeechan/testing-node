@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect} from 'react'
-import { v4 as uuidv4} from 'uuid'
 
 const FeedbackContext = createContext()
 
@@ -18,23 +17,32 @@ export const FeedbackProvider = ({children}) => {
     }, [])
 
     //fetches feedback
-    const fetchFeedback = async () => {
-        const response = await fetch("http://localhost:5000/feedback?_sort=id")
-        const data = await response.json()
+    const fetchFeedback = async (newFeedback) => {
+        const response = await fetch('/feedback');
+        const data = await response.json();
+        data.reverse();
+        
         setFeedback(data);
-        setIsLoading(false)
-
-    }
+        setIsLoading(false);
+        } 
 
     // to add feedback
-    const addFeedback = (newFeedback) => {
-        newFeedback.id = uuidv4()
-        newFeedback.rating = +newFeedback.rating
-        console.log(newFeedback)
-        //takes the objects that are already in feedback and puts it and the new ones in the array
-        setFeedback([newFeedback, ...feedback])
-    }
+    const addFeedback = async (newFeedback) => {
+        const response = await fetch('/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newFeedback),
+        })
+    
+        const data = await response.json()
 
+        //fixed the average rating problem
+        newFeedback.rating = +newFeedback.rating
+        //takes the objects that are already in feedback and puts it and the new ones in the array
+        setFeedback([data, ...feedback])
+      }
     //to delete feedback
     const deleteFeedback = (id) => {
         if(window.confirm('Are you sure you want to delete?')) {
